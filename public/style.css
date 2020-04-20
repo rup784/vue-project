@@ -28,10 +28,6 @@ body a {
     letter-spacing: 0.1em;
 }
 
-#mapid {
-    height: 25vh;
-}
-
 @media (min-width: 1920px) {
     .container {
         display: grid;

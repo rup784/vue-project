@@ -1,8 +1,15 @@
 <template>
     <div class="hello">
-        <pie-chart :data="[[localityD, incomeD]]"></pie-chart>
-        <p>Monthly income Distribution</p>
-        <p>{{localityD}} = {{incomeD}}</p>
+        <input id="title" :value="localityAppComp" placeholder="Enter pincode number for Seeing Graph view" v-on:keyup.enter="updatePin">
+        <button v-on:click="updatePin">
+                              Show Graph view
+                            </button>
+        <div>
+            <pie-chart :data="[[localityD, incomeD]]"></pie-chart>
+            <p>Monthly income Distribution</p>
+            <p>{{localityD}} = {{incomeD}}</p>
+    
+        </div>
     </div>
 </template>
 
@@ -12,7 +19,7 @@ import axios from "axios";
 export default {
     name: 'IncomeComp',
     props: {
-        msg: String
+        localityAppComp: String
     },
     data() {
         return {
@@ -25,16 +32,25 @@ export default {
         try {
             const res = await axios.get('https://api.jsonbin.io/b/5e96c62f435f5604bb41be5a');
             this.todos = res.data;
-
-            var localityCurrent = "Attiguppe";
+            this.updateValue();
+        } catch (e) {
+            console.error(e);
+        }
+    },
+    methods: {
+        updateValue: function() {
+            // var localityCurrent = "Attiguppe";
             for (var i = 0; i < this.todos.length; i++) {
-                if (this.todos[i].locality == localityCurrent) {
+                if (this.todos[i].locality == this.localityAppComp) {
                     this.incomeD = this.todos[i].income;
                     this.localityD = this.todos[i].locality;
                 }
             }
-        } catch (e) {
-            console.error(e);
+        },
+        updatePin: function() {
+            this.localityAppComp = document.getElementById('title').value;
+            console.log(this.localityAppComp);
+            this.updateValue();
         }
     }
 

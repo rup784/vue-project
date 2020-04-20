@@ -10,13 +10,3 @@ Vue.config.productionTip = false
 new Vue({
     render: h => h(App),
 }).$mount('#app')
-
-function reloadRefersh() {
-    location.reload();
-}
-
-var viewportWidth = window.innerWidth || document.documentElement.clientWidth;
-if (viewportWidth < 640) {
-    window.addEventListener("resize", reloadRefersh);
-    console.log('small viewport');
-}
